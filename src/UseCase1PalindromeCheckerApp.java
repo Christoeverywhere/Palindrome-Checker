@@ -1,4 +1,5 @@
- public class UseCase1PalindromeCheckerApp {
+import java.util.Scanner;
+public class UseCase1PalindromeCheckerApp {
 
         /**
          * Application entry point.
@@ -74,6 +75,51 @@
             }
 
 
+
+
+            /**
+             * Application entry point for UC4.
+             *
+             * @param args Command-line arguments
+             */
+
+
+            // Original String
+            // Create Scanner object for reading input (rinput)
+            Scanner scanner = new Scanner(System.in);
+
+            // Read input from user
+            System.out.print("Enter a string: ");
+            String rinput = scanner.nextLine();
+
+            // Convert String to Character Array
+            char[] characters = rinput.toCharArray();
+
+            boolean isPalindrome = true;
+
+            // Two-Pointer Approach
+            int start = 0;
+            int end = characters.length - 1;
+
+            while (start < end) {
+
+                if (characters[start] != characters[end]) {
+                    isPalindrome = false;
+                    break;
+                }
+
+                start++;
+                end--;
+            }
+
+            // Display Result
+            if (isPalindrome) {
+                System.out.println(rinput + " is a Palindrome");
+            } else {
+                System.out.println(rinput + " is Not a Palindrome");
+            }
+
+            scanner.close();
         }
     }
 
