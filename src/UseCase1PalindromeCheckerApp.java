@@ -1,4 +1,6 @@
 import java.util.Scanner;
+import java.util.Queue;
+import java.util.LinkedList;
 import java.util.Stack;
 public class UseCase1PalindromeCheckerApp {
 
@@ -122,10 +124,9 @@ public class UseCase1PalindromeCheckerApp {
 
             // ================= UC5 =================
 
-            Scanner scanner1 = new Scanner(System.in);
 
             System.out.print("Enter a string stack based: ");
-            String input = scanner1.nextLine();
+            String input = scanner.nextLine();
 
             Stack<Character> stack = new Stack<>();
 
@@ -151,8 +152,48 @@ public class UseCase1PalindromeCheckerApp {
                 System.out.println(input + " is Not a Palindrome");
             }
 
-            scanner.close();
-            scanner1.close();   // ✅ Fixed closing correct scanner
+
+
+
+            // ================= UC6 =================
+
+            System.out.print("Enter a string(Stack and Queue Based): ");
+            String input2 = scanner.nextLine();
+
+            // Create Queue (FIFO)
+            Queue<Character> queue = new LinkedList<>();
+
+            // Create Stack (LIFO)
+            Stack<Character> stack2 = new Stack<>();
+
+            // 1️⃣ Enqueue and Push characters
+            for (int i = 0; i < input.length(); i++) {
+                char ch = input.charAt(i);
+                queue.add(ch);     // Enqueue
+                stack2.push(ch);    // Push
+            }
+
+            boolean isPalindrome2 = true;
+
+            // 2️⃣ Compare dequeue vs pop
+            while (!queue.isEmpty()) {
+
+                char fromQueue = queue.remove();  // Dequeue (FIFO)
+                char fromStack = stack2.pop();     // Pop (LIFO)
+
+                if (fromQueue != fromStack) {
+                    isPalindrome2 = false;
+                    break;
+                }
+            }
+
+            // 3️⃣ Print result
+            if (isPalindrome2) {
+                System.out.println(input + " is a Palindrome");
+            } else {
+                System.out.println(input + " is Not a Palindrome");
+            }
+            scanner.close();// ✅ Fixed closing correct scanner
         }
         }
 
