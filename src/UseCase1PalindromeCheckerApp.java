@@ -2,6 +2,8 @@ import java.util.Scanner;
 import java.util.Queue;
 import java.util.LinkedList;
 import java.util.Stack;
+import java.util.Deque;
+import java.util.LinkedList;
 public class UseCase1PalindromeCheckerApp {
 
         /**
@@ -192,6 +194,59 @@ public class UseCase1PalindromeCheckerApp {
                 System.out.println(input + " is a Palindrome");
             } else {
                 System.out.println(input + " is Not a Palindrome");
+            }
+
+
+
+
+            /**
+             * ============================================================
+             * Use Case 7: Deque-Based Optimized Palindrome Checker
+             * ============================================================
+             *
+             * Goal:
+             * Use Deque to compare front and rear elements.
+             *
+             * Flow:
+             * - Insert characters into deque
+             * - Remove first & last
+             * - Compare until empty
+             *
+             * Data Structure: Deque
+             */
+
+
+            // Read input using existing scanner
+            System.out.print("Enter a string(Deque-Based) ");
+            String input3 = scanner.nextLine();
+
+// Create Deque (Double Ended Queue)
+            Deque<Character> deque2 = new LinkedList<>();
+
+// Insert characters into deque
+            for (int i = 0; i < input3.length(); i++) {
+                deque2.addLast(input3.charAt(i));
+            }
+
+            boolean isPalindrome3 = true;
+
+// Remove first & last and compare
+            while (deque2.size() > 1) {
+
+                char front2 = deque2.removeFirst();
+                char rear2 = deque2.removeLast();
+
+                if (front2 != rear2) {
+                    isPalindrome3 = false;
+                    break;
+                }
+            }
+
+// Print result
+            if (isPalindrome3) {
+                System.out.println(input2 + " is a Palindrome");
+            } else {
+                System.out.println(input2 + " is Not a Palindrome");
             }
             scanner.close();// ✅ Fixed closing correct scanner
         }
