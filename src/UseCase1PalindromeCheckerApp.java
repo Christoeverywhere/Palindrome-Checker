@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.Stack;
 public class UseCase1PalindromeCheckerApp {
 
         /**
@@ -119,7 +120,40 @@ public class UseCase1PalindromeCheckerApp {
                 System.out.println(rinput + " is Not a Palindrome");
             }
 
+            // ================= UC5 =================
+
+            Scanner scanner1 = new Scanner(System.in);
+
+            System.out.print("Enter a string stack based: ");
+            String input = scanner1.nextLine();
+
+            Stack<Character> stack = new Stack<>();
+
+            for (int i = 0; i < input.length(); i++) {
+                stack.push(input.charAt(i));
+            }
+
+            boolean isPalindromeUC5 = true;   // ✅ Renamed variable (fixed duplicate error)
+
+            for (int i = 0; i < input.length(); i++) {
+
+                char poppedChar = stack.pop();
+
+                if (input.charAt(i) != poppedChar) {
+                    isPalindromeUC5 = false;
+                    break;
+                }
+            }
+
+            if (isPalindromeUC5) {
+                System.out.println(input + " is a Palindrome");
+            } else {
+                System.out.println(input + " is Not a Palindrome");
+            }
+
             scanner.close();
+            scanner1.close();   // ✅ Fixed closing correct scanner
         }
-    }
+        }
+
 
