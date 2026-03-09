@@ -1,71 +1,45 @@
-import java.util.Scanner;
+import java.util.*;
 
-public class UseCase1PalindromeCheckerApp {
+interface PalindromeStrategy {
+    boolean checkPalindrome(String str);
+}
 
-    static class Node {
-        char data;
-        Node next;
+class StackStrategy implements PalindromeStrategy {
 
-        Node(char data) {
-            this.data = data;
-            this.next = null;
-        }
-    }
+    public boolean checkPalindrome(String str) {
+        String normalized = str.replaceAll("\\s+", "").toLowerCase();
+        Stack<Character> stack = new Stack<>();
 
-    static Node createList(String str) {
-        Node head = null, tail = null;
+        for (char c : normalized.toCharArray())
+            stack.push(c);
 
-        for (char c : str.toCharArray()) {
-            Node newNode = new Node(c);
-            if (head == null) {
-                head = newNode;
-                tail = newNode;
-            } else {
-                tail.next = newNode;
-                tail = newNode;
-            }
-        }
-        return head;
-    }
-
-    static Node reverse(Node head) {
-        Node prev = null;
-        Node current = head;
-
-        while (current != null) {
-            Node next = current.next;
-            current.next = prev;
-            prev = current;
-            current = next;
-        }
-        return prev;
-    }
-
-    static boolean isPalindrome(Node head) {
-        if (head == null || head.next == null)
-            return true;
-
-        Node slow = head;
-        Node fast = head;
-
-        while (fast.next != null && fast.next.next != null) {
-            slow = slow.next;
-            fast = fast.next.next;
-        }
-
-        Node secondHalf = reverse(slow.next);
-        Node firstHalf = head;
-
-        while (secondHalf != null) {
-            if (firstHalf.data != secondHalf.data)
+        for (char c : normalized.toCharArray())
+            if (c != stack.pop())
                 return false;
 
-            firstHalf = firstHalf.next;
-            secondHalf = secondHalf.next;
+        return true;
+    }
+}
+
+class DequeStrategy implements PalindromeStrategy {
+
+    public boolean checkPalindrome(String str) {
+        String normalized = str.replaceAll("\\s+", "").toLowerCase();
+        Deque<Character> deque = new ArrayDeque<>();
+
+        for (char c : normalized.toCharArray())
+            deque.addLast(c);
+
+        while (deque.size() > 1) {
+            if (deque.removeFirst() != deque.removeLast())
+                return false;
         }
 
         return true;
     }
+}
+
+public class UseCase1PalindromeCheckerApp {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -73,9 +47,17 @@ public class UseCase1PalindromeCheckerApp {
         System.out.print("Enter string: ");
         String input = sc.nextLine();
 
-        Node head = createList(input);
+        System.out.println("Choose Strategy: 1.Stack  2.Deque");
+        int choice = sc.nextInt();
 
-        if (isPalindrome(head))
+        PalindromeStrategy strategy;
+
+        if (choice == 1)
+            strategy = new StackStrategy();
+        else
+            strategy = new DequeStrategy();
+
+        if (strategy.checkPalindrome(input))
             System.out.println("Palindrome");
         else
             System.out.println("Not Palindrome");
